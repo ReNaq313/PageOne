@@ -123,7 +123,7 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
       completeFileName = uploadResultPdf.secure_url;
       await fs.promises.unlink(bookFilePath);
    }
-   
+
    const updatedBook = await bookModel.findOneAndUpdate(
       {
          _id: bookId,
@@ -140,4 +140,15 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
    res.json(updatedBook);
 };
 
-export { createBook, updateBook };
+const listBooks = async (req: Request, res: Response, next: NextFunction) => {
+
+   try {
+      // TODO: add pagination.
+      const book = await bookModel.find();
+      res.json(book);
+   } catch (err) {
+      return next(createHttpError(500, "Error while getting a book"));
+   }
+};
+
+export { createBook, updateBook,listBooks };
