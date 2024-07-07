@@ -44,6 +44,8 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
 
       console.log("book file upload result", bookFileUploadResult);
       console.log("upload result", uploadResult);
+      // @ts-ignore
+      console.log("user id", req.userId);
 
       const newBook = await bookModel.create({
          title,
@@ -57,7 +59,7 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
 
       await fs.promises.unlink(filePath);
       await fs.promises.unlink(bookFilePath);
- 
+
       res.status(201).json({ id: newBook._id });
    } catch (err) {
       console.log(err);
